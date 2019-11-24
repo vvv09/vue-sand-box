@@ -1,7 +1,10 @@
 <template>
     <div>
         <ul>
-            <TodoItem />
+            <TodoItem
+                v-for="todo of todoss"
+                v-bind:todoitem="todo"
+            />
         </ul>
     </div>
 </template>
@@ -10,6 +13,7 @@
     import TodoItem from '@/components/TodoItem'
 
     export default {
+        props: ['todoss'],
         components: {
             TodoItem
         }
