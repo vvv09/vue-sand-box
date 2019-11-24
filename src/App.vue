@@ -1,6 +1,8 @@
 <template>
     <div id="app">
         <h1>Todo application</h1>
+        <h4>При старте тащит записи с фейкового сервиса https://jsonplaceholder.typicode.com/</h4>
+        <h5>(просто чтобы показать, что это умеет)</h5>
         <hr>
         <AddTodo @add-todo="addTodo"/>
         <hr>
@@ -20,12 +22,13 @@
         name: 'app',
         data() {
             return {
-                todos: [
-                    {id: 1, title: 'Купить хлеб', completed: false},
-                    {id: 2, title: 'Купить молоко', completed: false},
-                    {id: 3, title: 'Купить масло', completed: false}
-                ]
+                todos: []
             }
+        },
+        mounted() { // чтобы запрос выпонялся когда комонент подготовил шаблон и поместил его в дерево
+            fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
+                .then(response => response.json())
+                .then(json => this.todos = json)
         },
         methods: {
             removeTodo(id) {
@@ -51,5 +54,11 @@
         text-align: center;
         color: #2c3e50;
         margin-top: 60px;
+    }
+
+    h4, h5 {
+        color: gray;
+        margin: 0px 0px;
+
     }
 </style>
