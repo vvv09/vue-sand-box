@@ -2,8 +2,9 @@
     <div>
         <ul>
             <TodoItem
-                v-for="todo of todoss"
+                v-for="(todo, i) of todoss"
                 v-bind:todoitem="todo"
+                v-bind:indexx="i"
                 v-on:remove-todoi="removeTodo" />
                 <!--по получении от чайлда события с именем "remove-todoi"
                                 выполнить функцию "removeTodo"-->
