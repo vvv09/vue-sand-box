@@ -1,11 +1,13 @@
 <template>
     <li>
-        <span>
-            <input type="checkbox">
+        <span v-bind:class="{done: todoitem.completed}">
+            <input type="checkbox" v-on:change="todoitem.completed = !todoitem.completed">
             <strong>{{todoitem.id}}</strong>
             {{todoitem.title}}
         </span>
-        <button class="deletebtn">&times;</button>
+        <button class="deletebtn" v-on:click="$emit('remove-todoi', todoitem.id)">&times;</button>
+        <!--  $emit('remove-todoi', todoitem.id) - сообщаем родительскому эл-ту
+              о произошедшем событии и передаем этому эл-ту данные -->
     </li>
 </template>
 

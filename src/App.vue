@@ -4,7 +4,9 @@
         <hr>
         <TodoList
             v-bind:todoss="todos"
+            @remove-todoi="removeTodo"
         />
+        <!--@remove-todoi тоже что и v-on:remove-todoi-->
     </div>
 </template>
 
@@ -20,6 +22,11 @@
                     {id: 2, title: 'Купить молоко', completed: false},
                     {id: 3, title: 'Купить масло', completed: false}
                 ]
+            }
+        },
+        methods: {
+            removeTodo(id) {
+                this.todos = this.todos.filter(t => t.id !== id)
             }
         },
         components: {

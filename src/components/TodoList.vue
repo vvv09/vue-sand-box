@@ -4,7 +4,9 @@
             <TodoItem
                 v-for="todo of todoss"
                 v-bind:todoitem="todo"
-            />
+                v-on:remove-todoi="removeTodo" />
+                <!--по получении от чайлда события с именем "remove-todoi"
+                                выполнить функцию "removeTodo"-->
         </ul>
     </div>
 </template>
@@ -16,6 +18,11 @@
         props: ['todoss'],
         components: {
             TodoItem
+        },
+        methods: {
+            removeTodo(id) {
+                this.$emit('remove-todoi', id); //пересылаем родителю
+            }
         }
     }
 </script>
