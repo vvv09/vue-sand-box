@@ -5,10 +5,12 @@
         <AddTodo @add-todo="addTodo"/>
         <hr>
         <TodoList
+                v-if="todos.length"
                 v-bind:todoss="todos"
                 @remove-todoi="removeTodo"
         />
         <!--@remove-todoi тоже что и v-on:remove-todoi-->
+        <p v-else>No todos!</p>
     </div>
 </template>
 
