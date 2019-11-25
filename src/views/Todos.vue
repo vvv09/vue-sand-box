@@ -4,8 +4,12 @@
         <hr>
         <AddTodo @add-todo="addTodo"/>
         <hr>
+        <div v-if="loading">
+            <Loader/>
+            <p>тащим...</p>
+        </div>
         <TodoList
-                v-if="todos.length"
+                v-else-if="todos.length"
                 v-bind:todoss="todos"
                 @remove-todoi="removeTodo"
         />
@@ -17,18 +21,25 @@
 <script>
     import TodoList from '@/components/TodoList'
     import AddTodo from '@/components/AddTodo'
+    import Loader from '@/components/Loader'
 
     export default {
         name: 'app',
         data() {
             return {
-                todos: []
+                todos: [],
+                loading: true
             }
         },
         mounted() { // чтобы запрос выпонялся когда комонент подготовил шаблон и поместил его в дерево
             fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
                 .then(response => response.json())
-                .then(json => this.todos = json)
+                .then(json => {
+                    setTimeout(() => {
+                        this.todos = json
+                        this.loading = false
+                    }, 5000) // искусственная задержка чтобы видеть лоадер
+                })
         },
         methods: {
             removeTodo(id) {
@@ -41,7 +52,8 @@
         },
         components: {
             TodoList,
-            AddTodo
+            AddTodo,
+            Loader
         }
     }
 </script>
