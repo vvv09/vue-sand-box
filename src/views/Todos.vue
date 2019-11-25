@@ -4,13 +4,18 @@
         <hr>
         <AddTodo @add-todo="addTodo"/>
         <hr>
+        <select v-model="filter">
+            <option value="all">All</option>
+            <option value="completed">Completed</option>
+            <option value="not-completed">Not Completed</option>
+        </select>
         <div v-if="loading">
             <Loader/>
             <p>тащим...</p>
         </div>
         <TodoList
-                v-else-if="todos.length"
-                v-bind:todoss="todos"
+                v-else-if="filteredTodos.length"
+                v-bind:todoss="filteredTodos"
                 @remove-todoi="removeTodo"
         />
         <!--@remove-todoi тоже что и v-on:remove-todoi-->
@@ -28,7 +33,8 @@
         data() {
             return {
                 todos: [],
-                loading: true
+                loading: true,
+                filter: 'all'
             }
         },
         mounted() { // чтобы запрос выпонялся когда комонент подготовил шаблон и поместил его в дерево
@@ -40,6 +46,25 @@
                         this.loading = false
                     }, 5000) // искусственная задержка чтобы видеть лоадер
                 })
+        },
+        watch: {
+            filter(value) { // ! название дожно состветствовать переменной, за которой надо следить !
+                console.log(value)
+            }
+        },
+        computed: {
+            filteredTodos() {
+                if (this.filter === 'all') {
+                    return this.todos
+                }
+                if (this.filter === 'completed') {
+                    return this.todos.filter(t => t.completed) // только те где completed = true
+                }
+                if (this.filter === 'not-completed') {
+                    return this.todos.filter(t => !t.completed)
+                }
+
+            }
         },
         methods: {
             removeTodo(id) {

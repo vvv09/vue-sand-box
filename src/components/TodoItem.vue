@@ -18,7 +18,7 @@
                 type: Object,
                 required: true
             },
-            indexx: Number
+            indexx: Number 
         },
         filters: {
            uppercase(value) {
